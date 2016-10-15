@@ -1,0 +1,15 @@
+FROM php:7.0-cli
+
+RUN curl -fsSL 'https://github.com/TysonAndre/igbinary/archive/master.tar.gz' -o igbinary.tar.gz \
+    && mkdir -p igbinary \
+    && tar -xf igbinary.tar.gz -C igbinary --strip-components=1 \
+    && rm igbinary.tar.gz \
+    && ( \
+        cd igbinary \
+        && phpize \
+        && ./configure CFLAGS="-O2 -g" --enable-igbinary \
+        && make -j$(nproc) \
+        && make install \
+    ) \
+    && rm -r igbinary \
+    && docker-php-ext-enable igbinary
