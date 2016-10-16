@@ -6,4 +6,4 @@ docker run \
     -v "$PWD":/usr/src/myapp \
     -w /usr/src/myapp \
     php7-igbinary \
-    php "$@"
+    sh -c "php $@"
